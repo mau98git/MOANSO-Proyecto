@@ -221,7 +221,7 @@ VALUES
 (null,
 "Olenka",
 "Lazo",
-"Pichi",
+"Pinchi",
 "DNI",
 "73194793",
 "966109790",
