@@ -8,6 +8,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import models.Cliente;
 import models.ClienteDAO;
+import models.Validaciones;
 import views.VistaClientes;
 
 public class ClienteController implements ActionListener{
@@ -17,6 +18,8 @@ public class ClienteController implements ActionListener{
     DefaultTableModel modeloTabla = new DefaultTableModel();
     VistaClientes vista = new VistaClientes();
     ClienteDAO dao = new ClienteDAO();
+    Validaciones val =new Validaciones();
+    boolean var;
 
     public ClienteController(VistaClientes vistaClientes) {
         this.vista = vistaClientes;
@@ -27,7 +30,7 @@ public class ClienteController implements ActionListener{
         this.vista.btn_actualizar_cliente.addActionListener(this);
         this.vista.btn_eliminar_cliente.addActionListener(this);
         this.vista.btn_nuevo_cliente.addActionListener(this);
-        this.vista.btn_salir_cliente.addActionListener(this);
+        this.vista.btn_buscar_cliente.addActionListener(this);
     }
     
     @Override
@@ -35,6 +38,7 @@ public class ClienteController implements ActionListener{
         if(e.getSource() == vista.btn_listar_cliente){
             limpiarTabla();
             listar(vista.tb_datos_cliente);
+            vista.btn_actualizar_cliente.setEnabled(false);
         }
         if(e.getSource() == vista.btn_registrar_cliente){
             registrar();
@@ -47,7 +51,11 @@ public class ClienteController implements ActionListener{
             }
         }
         if(e.getSource() == vista.btn_limpiarCampos_cliente){
-            limpiarCajasNoID();
+            limpiarCajas();
+            vista.btn_actualizar_cliente.setEnabled(false);
+            vista.btn_editar_cliente.setEnabled(false);
+            vista.btn_eliminar_cliente.setEnabled(false);
+            limpiarTabla();
         }
         if(e.getSource() == vista.btn_editar_cliente){
             editar();
@@ -68,38 +76,70 @@ public class ClienteController implements ActionListener{
         }        
         
         if(e.getSource() == vista.btn_nuevo_cliente){
-            limpiarCajas();;
+            limpiarCajas();
             vista.btn_nuevo_cliente.setEnabled(false);
             vista.btn_registrar_cliente.setEnabled(true);
             vista.btn_actualizar_cliente.setEnabled(false);
         }
-        if(e.getSource() == vista.btn_salir_cliente){
-            salir();
+        
+        if(e.getSource() == vista.btn_buscar_cliente){
+            limpiarTabla();
+            if(validarBuscar()==true){
+                listarBuscar(vista.tb_datos_cliente,vista.txt_buscar_cliente.getText());
+                vista.btn_actualizar_cliente.setEnabled(false);
+            }    
         }
     }
     private void registrar(){
         if (vista.txt_nombre_cliente.getText().equals("") || vista.txt_apellido_p_cliente.getText().equals("") || vista.txt_apellido_m_cliente.getText().equals("")
                 || vista.txt_tipo_doc_cliente.getText().equals("") || vista.txt_num_doc_cliente.getText().equals("") || vista.txt_cel_cliente.getText().equals("")){
-            JOptionPane.showMessageDialog(vista, "Debe completar los campos de nombres, apellidos, tipo y numero de documento y celular");
+            JOptionPane.showMessageDialog(vista, "Debe completar todos los campos");
             listar = false;
         }
         else{
-            listar = true;
-            String nombres = vista.txt_nombre_cliente.getText();
-            String apellido_paterno = vista.txt_apellido_p_cliente.getText();
-            String apellido_materno = vista.txt_apellido_m_cliente.getText();
-            String tipo_documento = vista.txt_tipo_doc_cliente.getText();
-            String num_documento = vista.txt_num_doc_cliente.getText();
-            String celular = vista.txt_cel_cliente.getText();
-            String email = vista.txt_email_cliente.getText();
+            if(validarNombre()==true && validarApePaterno()==true && validarApeMaterno()==true && validarTipo_documento()==true
+                && validarNumero_documento()==true && validarCelular()==true && validarEmail()==true){
+                listar = true;
+                String nombres = vista.txt_nombre_cliente.getText();
+                String apellido_paterno = vista.txt_apellido_p_cliente.getText();
+                String apellido_materno = vista.txt_apellido_m_cliente.getText();
+                String tipo_documento = vista.txt_tipo_doc_cliente.getText();
+                String num_documento = vista.txt_num_doc_cliente.getText();
+                String celular = vista.txt_cel_cliente.getText();
+                String email = vista.txt_email_cliente.getText();
 
-            Cliente cliente = new Cliente(nombres, apellido_paterno, apellido_materno, tipo_documento, num_documento, celular, email);
-            int listo = this.dao.agregar(cliente);
-            if(listo == 1){
-                JOptionPane.showMessageDialog(vista, "Cliente registrado con éxito");
-            }else{
-                JOptionPane.showMessageDialog(vista, "Error al registrar cliente");
-            } 
+                Cliente cliente = new Cliente(nombres, apellido_paterno, apellido_materno, tipo_documento, num_documento, celular, email);
+                int listo = this.dao.agregar(cliente);
+                if(listo == 1){
+                    JOptionPane.showMessageDialog(vista, "Cliente registrado con éxito");
+                }else{
+                    JOptionPane.showMessageDialog(vista, "Error al registrar cliente");
+                } 
+            }
+        }
+    }
+    
+    private void listarBuscar(JTable tabla,String buscar){
+        this.vista.btn_editar_cliente.setEnabled(true);
+        this.vista.btn_eliminar_cliente.setEnabled(true);
+        this.modeloTabla = (DefaultTableModel)tabla.getModel();
+        List<Cliente> listarClientes = this.dao.listarBuscar(buscar);
+        Object[] objeto = new Object[9];
+        if(listarClientes.size()>0){
+            for(int i=0;i<listarClientes.size();i++){
+                objeto[0] = listarClientes.get(i).getIdCliente();
+                objeto[1] = listarClientes.get(i).getNombres();
+                objeto[2] = listarClientes.get(i).getApellido_paterno();
+                objeto[3] = listarClientes.get(i).getApellido_materno();
+                objeto[4] = listarClientes.get(i).getTipo_documento();
+                objeto[5] = listarClientes.get(i).getNum_documento();
+                objeto[6] = listarClientes.get(i).getCelular();
+                objeto[7] = listarClientes.get(i).getEmail();
+                modeloTabla.addRow(objeto);
+            }
+            vista.tb_datos_cliente.setModel(modeloTabla);
+        }else{
+            JOptionPane.showMessageDialog(vista, "No hay clientes para listar");
         }
     }
     
@@ -109,18 +149,22 @@ public class ClienteController implements ActionListener{
         this.modeloTabla = (DefaultTableModel)tabla.getModel();
         List<Cliente> listarClientes = this.dao.listar();
         Object[] objeto = new Object[9];
-        for(int i=0;i<listarClientes.size();i++){
-            objeto[0] = listarClientes.get(i).getIdCliente();
-            objeto[1] = listarClientes.get(i).getNombres();
-            objeto[2] = listarClientes.get(i).getApellido_paterno();
-            objeto[3] = listarClientes.get(i).getApellido_materno();
-            objeto[4] = listarClientes.get(i).getTipo_documento();
-            objeto[5] = listarClientes.get(i).getNum_documento();
-            objeto[6] = listarClientes.get(i).getCelular();
-            objeto[7] = listarClientes.get(i).getEmail();
-            modeloTabla.addRow(objeto);
+        if(listarClientes.size()>0){
+            for(int i=0;i<listarClientes.size();i++){
+                objeto[0] = listarClientes.get(i).getIdCliente();
+                objeto[1] = listarClientes.get(i).getNombres();
+                objeto[2] = listarClientes.get(i).getApellido_paterno();
+                objeto[3] = listarClientes.get(i).getApellido_materno();
+                objeto[4] = listarClientes.get(i).getTipo_documento();
+                objeto[5] = listarClientes.get(i).getNum_documento();
+                objeto[6] = listarClientes.get(i).getCelular();
+                objeto[7] = listarClientes.get(i).getEmail();
+                modeloTabla.addRow(objeto);
+            }
+            vista.tb_datos_cliente.setModel(modeloTabla);
+        }else{
+            JOptionPane.showMessageDialog(vista, "No hay clientes para listar");
         }
-        vista.tb_datos_cliente.setModel(modeloTabla);
     }
     
     private void limpiarTabla (){
@@ -140,16 +184,7 @@ public class ClienteController implements ActionListener{
         vista.txt_cel_cliente.setText("");
         vista.txt_email_cliente.setText("");
     }
-    
-    private void limpiarCajasNoID(){
-        vista.txt_nombre_cliente.setText("");
-        vista.txt_apellido_p_cliente.setText("");
-        vista.txt_apellido_m_cliente.setText("");
-        vista.txt_tipo_doc_cliente.setText("");
-        vista.txt_num_doc_cliente.setText("");
-        vista.txt_cel_cliente.setText("");
-        vista.txt_email_cliente.setText("");
-    }
+   
     
     private void editar(){
         int fila = vista.tb_datos_cliente.getSelectedRow();
@@ -182,28 +217,31 @@ public class ClienteController implements ActionListener{
     private void actualizar(){
          if (vista.txt_nombre_cliente.getText().equals("") || vista.txt_apellido_p_cliente.getText().equals("") || vista.txt_apellido_m_cliente.getText().equals("")
                 || vista.txt_tipo_doc_cliente.getText().equals("") || vista.txt_num_doc_cliente.getText().equals("") || vista.txt_cel_cliente.getText().equals("")){
-            JOptionPane.showMessageDialog(vista, "Debe completar los campos de nombres, apellidos, tipo y numero de documento y celular");
+            JOptionPane.showMessageDialog(vista, "Debe completar todos los campos");
             listar = false;
         }else{
-            actualizar = true;
-            vista.btn_registrar_cliente.setEnabled(true);
-            vista.btn_actualizar_cliente.setEnabled(false);
-            vista.btn_nuevo_cliente.setEnabled(false);
-            int idCliente = Integer.parseInt(vista.txt_idCliente.getText());
-            String nombres = vista.txt_nombre_cliente.getText();
-            String apellido_paterno = vista.txt_apellido_p_cliente.getText();
-            String apellido_materno = vista.txt_apellido_m_cliente.getText();
-            String tipo_documento = vista.txt_tipo_doc_cliente.getText();
-            String num_documento = vista.txt_num_doc_cliente.getText();
-            String celular = vista.txt_cel_cliente.getText();
-            String email = vista.txt_email_cliente.getText();
+            if(validarNombre()==true && validarApePaterno()==true && validarApeMaterno()==true && validarTipo_documento()==true
+            && validarNumero_documento()==true && validarCelular()==true && validarEmail()==true){
+                actualizar = true;
+                vista.btn_registrar_cliente.setEnabled(true);
+                vista.btn_actualizar_cliente.setEnabled(false);
+                vista.btn_nuevo_cliente.setEnabled(false);
+                int idCliente = Integer.parseInt(vista.txt_idCliente.getText());
+                String nombres = vista.txt_nombre_cliente.getText();
+                String apellido_paterno = vista.txt_apellido_p_cliente.getText();
+                String apellido_materno = vista.txt_apellido_m_cliente.getText();
+                String tipo_documento = vista.txt_tipo_doc_cliente.getText();
+                String num_documento = vista.txt_num_doc_cliente.getText();
+                String celular = vista.txt_cel_cliente.getText();
+                String email = vista.txt_email_cliente.getText();
 
-            Cliente cliente = new Cliente(idCliente, nombres, apellido_paterno, apellido_materno, tipo_documento, num_documento, celular, email);
-            int r = this.dao.actualizar(cliente);
-            if(r == 1){
-                JOptionPane.showMessageDialog(vista, "Cliente actualizado con éxito");
-            }else{
-                JOptionPane.showMessageDialog(vista, "Error al actualizar cliente");
+                Cliente cliente = new Cliente(idCliente, nombres, apellido_paterno, apellido_materno, tipo_documento, num_documento, celular, email);
+                int r = this.dao.actualizar(cliente);
+                if(r == 1){
+                    JOptionPane.showMessageDialog(vista, "Cliente actualizado con éxito");
+                }else{
+                    JOptionPane.showMessageDialog(vista, "Error al actualizar cliente");
+                }
             }
         }
     }
@@ -225,7 +263,92 @@ public class ClienteController implements ActionListener{
             }
         }
     }
-    private void salir(){
-        System.exit(0);
+    
+    private boolean validarNombre(){
+        var = val.validacionNomApe(vista.txt_nombre_cliente.getText());
+        if(var == false){
+            JOptionPane.showMessageDialog(vista, "Ingrese un nombre valido");
+            vista.txt_nombre_cliente.setText("");
+            return false;
+        }else{
+            return true;
+        }
+    }
+    
+    private boolean validarApePaterno(){
+       var = val.validacionNomApe(vista.txt_apellido_p_cliente.getText());
+        if(var == false){
+            JOptionPane.showMessageDialog(vista, "Ingrese un apellido valido");
+            vista.txt_apellido_p_cliente.setText("");
+            return false;
+        }else{
+            return true;
+        }
+    }
+    
+    private boolean validarApeMaterno(){
+        var = val.validacionNomApe(vista.txt_apellido_m_cliente.getText());
+        if(var == false){
+            JOptionPane.showMessageDialog(vista, "Ingrese un apellido valido");
+            vista.txt_apellido_m_cliente.setText("");
+            return false;
+        }else{
+            return true;
+        }
+    }
+    
+    private boolean validarTipo_documento(){
+       var = val.validacionTipoDocumento(vista.txt_tipo_doc_cliente.getText());
+        if(var == false){
+            JOptionPane.showMessageDialog(vista, "Solo puede ingresar DNI o Pasaporte");
+            vista.txt_tipo_doc_cliente.setText("");
+            return false;
+        }else{
+            return true;
+        }
+    }
+    
+    private boolean validarNumero_documento(){
+       var = val.validacionNumeros(vista.txt_num_doc_cliente.getText());
+        if(var == false){
+            JOptionPane.showMessageDialog(vista, "Ingrese un numero de documento valido");
+            vista.txt_num_doc_cliente.setText("");
+            return false;
+        }else{
+            return true;
+        }
+    }
+    
+    private boolean validarCelular(){
+        var = val.validacionNumeros(vista.txt_cel_cliente.getText());
+        if(var == false){
+            JOptionPane.showMessageDialog(vista, "Ingrese un numero de celular valido");
+            vista.txt_cel_cliente.setText("");
+            return false;
+        }else{
+            return true;
+        }
+    }
+    
+    private boolean validarEmail(){
+        var = val.validacionEmail(vista.txt_email_cliente.getText());
+        if(var == false){
+            JOptionPane.showMessageDialog(vista, "Ingrese un email valido");
+            vista.txt_email_cliente.setText("");
+            return false;
+        }else{
+            return true;
+        }
+    }
+    
+    private boolean validarBuscar(){
+        var = val.validacionLetras(vista.txt_buscar_cliente.getText());
+        if(var == false){
+            JOptionPane.showMessageDialog(vista, "Ingrese un nombre valido");
+            vista.txt_buscar_cliente.setText("");
+            return false;
+        }else{
+            return true;
+        }
     }
 }

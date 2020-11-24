@@ -6,6 +6,14 @@
 package views;
 
 import controllers.ClienteController;
+import controllers.HabitacionController;
+import controllers.MovimientosController;
+import controllers.RepClienteController;
+import controllers.RepReservasController;
+import controllers.RepHabitacionController;
+import controllers.RepTrabajadorController;
+import controllers.ReservasController;
+import controllers.TrabajadorController;
 
 /**
  *
@@ -18,6 +26,8 @@ public class Menu extends javax.swing.JFrame {
      */
     public Menu() {
         initComponents();
+        this.setExtendedState(Menu.MAXIMIZED_BOTH);
+        this.setTitle("Sistema de reservas hotel Starlight INN");
     }
 
     /**
@@ -30,89 +40,167 @@ public class Menu extends javax.swing.JFrame {
     private void initComponents() {
 
         escritorio = new javax.swing.JDesktopPane();
+        lbl_idTrabajador = new javax.swing.JLabel();
+        lbl_nombre = new javax.swing.JLabel();
+        lbl_ape_paterno = new javax.swing.JLabel();
+        lbl_ape_materno = new javax.swing.JLabel();
+        lbl_acceso = new javax.swing.JLabel();
         menuBar = new javax.swing.JMenuBar();
-        fileMenu = new javax.swing.JMenu();
-        openMenuItem = new javax.swing.JMenuItem();
-        saveMenuItem = new javax.swing.JMenuItem();
-        saveAsMenuItem = new javax.swing.JMenuItem();
-        exitMenuItem = new javax.swing.JMenuItem();
-        editMenu = new javax.swing.JMenu();
-        cutMenuItem = new javax.swing.JMenuItem();
-        copyMenuItem = new javax.swing.JMenuItem();
-        pasteMenuItem = new javax.swing.JMenuItem();
-        deleteMenuItem = new javax.swing.JMenuItem();
-        helpMenu = new javax.swing.JMenu();
-        contentMenuItem = new javax.swing.JMenuItem();
-        aboutMenuItem = new javax.swing.JMenuItem();
+        mnuClientes = new javax.swing.JMenu();
+        clienteMenuItem = new javax.swing.JMenuItem();
+        reservasMenuItem = new javax.swing.JMenuItem();
+        movimientosMenuItem = new javax.swing.JMenuItem();
+        mnuTrabajador = new javax.swing.JMenu();
+        trabajadorMenuItem = new javax.swing.JMenuItem();
+        mnuHabitaciones = new javax.swing.JMenu();
+        habitacionesMenuItem = new javax.swing.JMenuItem();
+        mnuReportes = new javax.swing.JMenu();
+        repclientesMenuItem = new javax.swing.JMenuItem();
+        represervasMenuItem = new javax.swing.JMenuItem();
+        reptrabajadoresMenuItem = new javax.swing.JMenuItem();
+        rephabitacionesMenuItem = new javax.swing.JMenuItem();
+        mnuSalir = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        fileMenu.setMnemonic('f');
-        fileMenu.setText("File");
+        escritorio.setBackground(javax.swing.UIManager.getDefaults().getColor("Menu.selectionBackground"));
 
-        openMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.CTRL_MASK));
-        openMenuItem.setMnemonic('o');
-        openMenuItem.setText("Cliente");
-        openMenuItem.addActionListener(new java.awt.event.ActionListener() {
+        lbl_idTrabajador.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lbl_idTrabajador.setText("jLabel1");
+        escritorio.add(lbl_idTrabajador);
+        lbl_idTrabajador.setBounds(20, 20, 210, 15);
+
+        lbl_nombre.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lbl_nombre.setText("jLabel2");
+        escritorio.add(lbl_nombre);
+        lbl_nombre.setBounds(20, 50, 210, 15);
+
+        lbl_ape_paterno.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lbl_ape_paterno.setText("jLabel3");
+        escritorio.add(lbl_ape_paterno);
+        lbl_ape_paterno.setBounds(20, 80, 210, 15);
+
+        lbl_ape_materno.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lbl_ape_materno.setText("jLabel4");
+        escritorio.add(lbl_ape_materno);
+        lbl_ape_materno.setBounds(20, 110, 210, 15);
+
+        lbl_acceso.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lbl_acceso.setText("jLabel5");
+        escritorio.add(lbl_acceso);
+        lbl_acceso.setBounds(20, 140, 210, 15);
+
+        mnuClientes.setMnemonic('f');
+        mnuClientes.setText("Clientes");
+
+        clienteMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.CTRL_MASK));
+        clienteMenuItem.setMnemonic('o');
+        clienteMenuItem.setText("Cliente");
+        clienteMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                openMenuItemActionPerformed(evt);
+                clienteMenuItemActionPerformed(evt);
             }
         });
-        fileMenu.add(openMenuItem);
+        mnuClientes.add(clienteMenuItem);
 
-        saveMenuItem.setMnemonic('s');
-        saveMenuItem.setText("Save");
-        fileMenu.add(saveMenuItem);
-
-        saveAsMenuItem.setMnemonic('a');
-        saveAsMenuItem.setText("Save As ...");
-        saveAsMenuItem.setDisplayedMnemonicIndex(5);
-        fileMenu.add(saveAsMenuItem);
-
-        exitMenuItem.setMnemonic('x');
-        exitMenuItem.setText("Exit");
-        exitMenuItem.addActionListener(new java.awt.event.ActionListener() {
+        reservasMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, java.awt.event.InputEvent.CTRL_MASK));
+        reservasMenuItem.setText("Reservas");
+        reservasMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                exitMenuItemActionPerformed(evt);
+                reservasMenuItemActionPerformed(evt);
             }
         });
-        fileMenu.add(exitMenuItem);
+        mnuClientes.add(reservasMenuItem);
 
-        menuBar.add(fileMenu);
+        movimientosMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_M, java.awt.event.InputEvent.CTRL_MASK));
+        movimientosMenuItem.setMnemonic('t');
+        movimientosMenuItem.setText("Movimientos");
+        movimientosMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                movimientosMenuItemActionPerformed(evt);
+            }
+        });
+        mnuClientes.add(movimientosMenuItem);
 
-        editMenu.setMnemonic('e');
-        editMenu.setText("Edit");
+        menuBar.add(mnuClientes);
 
-        cutMenuItem.setMnemonic('t');
-        cutMenuItem.setText("Cut");
-        editMenu.add(cutMenuItem);
+        mnuTrabajador.setMnemonic('e');
+        mnuTrabajador.setText("Trabajador");
 
-        copyMenuItem.setMnemonic('y');
-        copyMenuItem.setText("Copy");
-        editMenu.add(copyMenuItem);
+        trabajadorMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_T, java.awt.event.InputEvent.CTRL_MASK));
+        trabajadorMenuItem.setMnemonic('s');
+        trabajadorMenuItem.setText("Trabajadores y accesos");
+        trabajadorMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                trabajadorMenuItemActionPerformed(evt);
+            }
+        });
+        mnuTrabajador.add(trabajadorMenuItem);
 
-        pasteMenuItem.setMnemonic('p');
-        pasteMenuItem.setText("Paste");
-        editMenu.add(pasteMenuItem);
+        menuBar.add(mnuTrabajador);
 
-        deleteMenuItem.setMnemonic('d');
-        deleteMenuItem.setText("Delete");
-        editMenu.add(deleteMenuItem);
+        mnuHabitaciones.setMnemonic('h');
+        mnuHabitaciones.setText("Habitaciones");
 
-        menuBar.add(editMenu);
+        habitacionesMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_H, java.awt.event.InputEvent.CTRL_MASK));
+        habitacionesMenuItem.setMnemonic('c');
+        habitacionesMenuItem.setText("Habitaciones");
+        habitacionesMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                habitacionesMenuItemActionPerformed(evt);
+            }
+        });
+        mnuHabitaciones.add(habitacionesMenuItem);
 
-        helpMenu.setMnemonic('h');
-        helpMenu.setText("Help");
+        menuBar.add(mnuHabitaciones);
 
-        contentMenuItem.setMnemonic('c');
-        contentMenuItem.setText("Contents");
-        helpMenu.add(contentMenuItem);
+        mnuReportes.setText("Reportes");
 
-        aboutMenuItem.setMnemonic('a');
-        aboutMenuItem.setText("About");
-        helpMenu.add(aboutMenuItem);
+        repclientesMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_M, java.awt.event.InputEvent.CTRL_MASK));
+        repclientesMenuItem.setText("Clientes");
+        repclientesMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                repclientesMenuItemActionPerformed(evt);
+            }
+        });
+        mnuReportes.add(repclientesMenuItem);
 
-        menuBar.add(helpMenu);
+        represervasMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_J, java.awt.event.InputEvent.CTRL_MASK));
+        represervasMenuItem.setText("Reservas");
+        represervasMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                represervasMenuItemActionPerformed(evt);
+            }
+        });
+        mnuReportes.add(represervasMenuItem);
+
+        reptrabajadoresMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_K, java.awt.event.InputEvent.CTRL_MASK));
+        reptrabajadoresMenuItem.setText("Trabajadores");
+        reptrabajadoresMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                reptrabajadoresMenuItemActionPerformed(evt);
+            }
+        });
+        mnuReportes.add(reptrabajadoresMenuItem);
+
+        rephabitacionesMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_L, java.awt.event.InputEvent.CTRL_MASK));
+        rephabitacionesMenuItem.setText("Habitaciones");
+        rephabitacionesMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rephabitacionesMenuItemActionPerformed(evt);
+            }
+        });
+        mnuReportes.add(rephabitacionesMenuItem);
+
+        menuBar.add(mnuReportes);
+
+        mnuSalir.setText("Salir");
+        mnuSalir.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                mnuSalirMouseClicked(evt);
+            }
+        });
+        menuBar.add(mnuSalir);
 
         setJMenuBar(menuBar);
 
@@ -124,23 +212,87 @@ public class Menu extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(escritorio, javax.swing.GroupLayout.DEFAULT_SIZE, 462, Short.MAX_VALUE)
+            .addComponent(escritorio, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 464, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void exitMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitMenuItemActionPerformed
-        System.exit(0);
-    }//GEN-LAST:event_exitMenuItemActionPerformed
-
-    private void openMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openMenuItemActionPerformed
+    private void clienteMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clienteMenuItemActionPerformed
         VistaClientes vista = new VistaClientes();
         escritorio.add(vista);
         vista.toFront();
         vista.setVisible(true);
         ClienteController controlador = new ClienteController(vista); 
-    }//GEN-LAST:event_openMenuItemActionPerformed
+    }//GEN-LAST:event_clienteMenuItemActionPerformed
+
+    private void trabajadorMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_trabajadorMenuItemActionPerformed
+        VistaTrabajadores vista = new VistaTrabajadores();
+        escritorio.add(vista);
+        vista.toFront();
+        vista.setVisible(true);
+        TrabajadorController controlador = new TrabajadorController(vista); 
+    }//GEN-LAST:event_trabajadorMenuItemActionPerformed
+
+    private void movimientosMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_movimientosMenuItemActionPerformed
+        VistaMovimientos vista = new VistaMovimientos();
+        escritorio.add(vista);
+        vista.toFront();
+        vista.setVisible(true);
+        MovimientosController controlador = new MovimientosController(vista); 
+    }//GEN-LAST:event_movimientosMenuItemActionPerformed
+
+    private void reservasMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reservasMenuItemActionPerformed
+        VistaReserva vista = new VistaReserva();
+        escritorio.add(vista);
+        vista.toFront();
+        vista.setVisible(true);
+        ReservasController controlador = new ReservasController(vista); 
+    }//GEN-LAST:event_reservasMenuItemActionPerformed
+
+    private void mnuSalirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mnuSalirMouseClicked
+        System.exit(0);
+    }//GEN-LAST:event_mnuSalirMouseClicked
+
+    private void habitacionesMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_habitacionesMenuItemActionPerformed
+        VistaHabitaciones vista = new VistaHabitaciones();
+        escritorio.add(vista);
+        vista.toFront();
+        vista.setVisible(true);
+        HabitacionController controlador = new HabitacionController(vista);
+    }//GEN-LAST:event_habitacionesMenuItemActionPerformed
+
+    private void reptrabajadoresMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reptrabajadoresMenuItemActionPerformed
+        VistaRepTrabajadores vista = new VistaRepTrabajadores();
+        escritorio.add(vista);
+        vista.toFront();
+        vista.setVisible(true);
+        RepTrabajadorController controlador = new RepTrabajadorController(vista);
+    }//GEN-LAST:event_reptrabajadoresMenuItemActionPerformed
+
+    private void represervasMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_represervasMenuItemActionPerformed
+        VistaRepReservas vista = new VistaRepReservas();
+        escritorio.add(vista);
+        vista.toFront();
+        vista.setVisible(true);
+        RepReservasController controlador = new RepReservasController(vista);
+    }//GEN-LAST:event_represervasMenuItemActionPerformed
+
+    private void rephabitacionesMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rephabitacionesMenuItemActionPerformed
+        VistaRepHabitacion vista = new VistaRepHabitacion();
+        escritorio.add(vista);
+        vista.toFront();
+        vista.setVisible(true);
+        RepHabitacionController controlador = new RepHabitacionController(vista);
+    }//GEN-LAST:event_rephabitacionesMenuItemActionPerformed
+
+    private void repclientesMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_repclientesMenuItemActionPerformed
+        VistaRepClientes vista = new VistaRepClientes();
+        escritorio.add(vista);
+        vista.toFront();
+        vista.setVisible(true);
+        RepClienteController controlador = new RepClienteController(vista);
+    }//GEN-LAST:event_repclientesMenuItemActionPerformed
 
     /**
      * @param args the command line arguments
@@ -178,21 +330,27 @@ public class Menu extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenuItem aboutMenuItem;
-    private javax.swing.JMenuItem contentMenuItem;
-    private javax.swing.JMenuItem copyMenuItem;
-    private javax.swing.JMenuItem cutMenuItem;
-    private javax.swing.JMenuItem deleteMenuItem;
-    private javax.swing.JMenu editMenu;
+    private javax.swing.JMenuItem clienteMenuItem;
     private javax.swing.JDesktopPane escritorio;
-    private javax.swing.JMenuItem exitMenuItem;
-    private javax.swing.JMenu fileMenu;
-    private javax.swing.JMenu helpMenu;
+    private javax.swing.JMenuItem habitacionesMenuItem;
+    public javax.swing.JLabel lbl_acceso;
+    public javax.swing.JLabel lbl_ape_materno;
+    public javax.swing.JLabel lbl_ape_paterno;
+    public javax.swing.JLabel lbl_idTrabajador;
+    public javax.swing.JLabel lbl_nombre;
     private javax.swing.JMenuBar menuBar;
-    private javax.swing.JMenuItem openMenuItem;
-    private javax.swing.JMenuItem pasteMenuItem;
-    private javax.swing.JMenuItem saveAsMenuItem;
-    private javax.swing.JMenuItem saveMenuItem;
+    private javax.swing.JMenu mnuClientes;
+    public javax.swing.JMenu mnuHabitaciones;
+    public javax.swing.JMenu mnuReportes;
+    private javax.swing.JMenu mnuSalir;
+    public javax.swing.JMenu mnuTrabajador;
+    private javax.swing.JMenuItem movimientosMenuItem;
+    private javax.swing.JMenuItem repclientesMenuItem;
+    private javax.swing.JMenuItem rephabitacionesMenuItem;
+    private javax.swing.JMenuItem represervasMenuItem;
+    private javax.swing.JMenuItem reptrabajadoresMenuItem;
+    private javax.swing.JMenuItem reservasMenuItem;
+    private javax.swing.JMenuItem trabajadorMenuItem;
     // End of variables declaration//GEN-END:variables
 
 }

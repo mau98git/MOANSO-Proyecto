@@ -25,8 +25,53 @@ public class HabitacionDAO {
                 hab.setNumero(rs.getString(2));
                 hab.setPiso(rs.getString(3));
                 hab.setPrecio(rs.getDouble(4));
+                hab.setTipo_Habitacion(rs.getString(5));
+                hab.setEstado(rs.getString(6));
+                listarHabitacion.add(hab);
+            }
+        } catch (Exception e) {
+            System.err.println("Error al listar: "+e.getMessage());
+        }
+        return listarHabitacion;            
+    }
+    
+    public List<Habitacion> repListar(){
+        List<Habitacion> listarHabitacion = new ArrayList<>();
+        String sql = "SELECT numero,piso,precio,tipo_habitacion,estado_habitacion FROM habitacion;";
+        try {
+            con = conectar.conectarServidor();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while(rs.next()){
+                Habitacion hab = new Habitacion();
+                hab.setNumero(rs.getString(1));
+                hab.setPiso(rs.getString(2));
+                hab.setPrecio(rs.getDouble(3));
+                hab.setTipo_Habitacion(rs.getString(4));
                 hab.setEstado(rs.getString(5));
-                hab.setTipo_Habitacion(rs.getString(6));
+                listarHabitacion.add(hab);
+            }
+        } catch (Exception e) {
+            System.err.println("Error al listar: "+e.getMessage());
+        }
+        return listarHabitacion;            
+    }
+    
+    public List<Habitacion> listarBuscar(String buscar){
+        List<Habitacion> listarHabitacion = new ArrayList<>();
+        String sql = "SELECT * FROM habitacion where numero like '%"+ buscar + "%'";
+        try {
+            con = conectar.conectarServidor();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while(rs.next()){
+                Habitacion hab = new Habitacion();
+                hab.setIdHabitacion(rs.getInt(1));
+                hab.setNumero(rs.getString(2));
+                hab.setPiso(rs.getString(3));
+                hab.setPrecio(rs.getDouble(4));
+                hab.setTipo_Habitacion(rs.getString(5));
+                hab.setEstado(rs.getString(6));
                 listarHabitacion.add(hab);
             }
         } catch (Exception e) {
@@ -55,7 +100,7 @@ public class HabitacionDAO {
     
     public int actualizar(Habitacion hab){
         int r = 0;
-        String sql = "UPDATE habitacion SET numero = ?, piso = ?, precio = ?, estado = ?, tipo_habitacion = ? WHERE idHabitacion = ?";
+        String sql = "UPDATE habitacion SET numero = ?, piso = ?, precio = ?, estado_habitacion = ?, tipo_habitacion = ? WHERE idHabitacion = ?";
         try {
             con = conectar.conectarServidor();
             ps = con.prepareStatement(sql);

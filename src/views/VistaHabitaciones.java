@@ -9,7 +9,7 @@ package views;
  *
  * @author Diego
  */
-public class VistaHabitaciones extends javax.swing.JFrame {
+public class VistaHabitaciones extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form VistaHabitaciones
@@ -29,41 +29,49 @@ public class VistaHabitaciones extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
-        txtidHabitacion = new javax.swing.JTextField();
+        txt_id_habitacion = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        txtnumero_hab = new javax.swing.JTextField();
-        cbxpiso_hab = new javax.swing.JComboBox<>();
-        txtprecio_hab = new javax.swing.JTextField();
-        cbxestado_hab = new javax.swing.JComboBox<>();
-        cbxtipo_hab = new javax.swing.JComboBox<>();
-        btnnuevo_hab = new javax.swing.JButton();
-        btnguardar_hab = new javax.swing.JButton();
-        btncancelar_hab = new javax.swing.JButton();
-        btneditar_hab = new javax.swing.JButton();
+        txt_numero_hab = new javax.swing.JTextField();
+        txt_precio_hab = new javax.swing.JTextField();
+        btn_registrar_hab = new javax.swing.JButton();
+        btn_limpiar_campos_hab = new javax.swing.JButton();
+        txt_piso_hab = new javax.swing.JTextField();
+        txt_estado_hab = new javax.swing.JTextField();
+        txt_tipo_hab = new javax.swing.JTextField();
+        btn_nuevo_hab = new javax.swing.JButton();
+        jLabel8 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
-        jLabel7 = new javax.swing.JLabel();
-        txtbuscar_hab = new javax.swing.JTextField();
-        btnbuscar_hab = new javax.swing.JButton();
-        btneliminar_hab = new javax.swing.JButton();
-        btnsalir_hab = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tbListaHabitaciones = new javax.swing.JTable();
-        btnListar_hab = new javax.swing.JButton();
+        tb_datos_hab = new javax.swing.JTable();
+        jPanel3 = new javax.swing.JPanel();
+        jLabel7 = new javax.swing.JLabel();
+        txt_buscar_hab = new javax.swing.JTextField();
+        btn_buscar_hab = new javax.swing.JButton();
+        btn_editar_hab = new javax.swing.JButton();
+        btn_actualizar_hab = new javax.swing.JButton();
+        btn_eliminar_hab = new javax.swing.JButton();
+        btn_listar_hab = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setClosable(true);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setIconifiable(true);
+        setMaximizable(true);
+        setResizable(true);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 3, 18)); // NOI18N
         jLabel1.setText("Habitaciones");
 
-        jPanel1.setBackground(new java.awt.Color(255, 153, 102));
+        jPanel1.setBackground(new java.awt.Color(252, 237, 230));
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Registro de Habitaciones"));
 
+        txt_id_habitacion.setEditable(false);
+
         jLabel2.setFont(new java.awt.Font("Tahoma", 2, 14)); // NOI18N
-        jLabel2.setText("Número: ");
+        jLabel2.setText("Número de habitación: ");
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 2, 14)); // NOI18N
         jLabel3.setText("Piso: ");
@@ -75,115 +83,105 @@ public class VistaHabitaciones extends javax.swing.JFrame {
         jLabel5.setText("Estado: ");
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 2, 14)); // NOI18N
-        jLabel6.setText("Tipo de habitacion: ");
+        jLabel6.setText("Tipo de habitación: ");
 
-        cbxpiso_hab.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione una opcion", "2", "3", "4", "5" }));
+        btn_registrar_hab.setIcon(new javax.swing.ImageIcon(getClass().getResource("/views/icon/agregar.png"))); // NOI18N
+        btn_registrar_hab.setText("Registrar");
 
-        cbxestado_hab.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione opcion", "Disponible ", "Ocupado", "Mantenimiento" }));
+        btn_limpiar_campos_hab.setIcon(new javax.swing.ImageIcon(getClass().getResource("/views/icon/limpiar.png"))); // NOI18N
+        btn_limpiar_campos_hab.setText("Limpiar Campos");
 
-        cbxtipo_hab.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione opcion", "Indivudual", "Matrimonial", "Doble", "Triple" }));
+        txt_tipo_hab.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_tipo_habActionPerformed(evt);
+            }
+        });
 
-        btnnuevo_hab.setText("Nuevo");
+        btn_nuevo_hab.setIcon(new javax.swing.ImageIcon(getClass().getResource("/views/icon/nuevo.png"))); // NOI18N
+        btn_nuevo_hab.setText("Nuevo");
+        btn_nuevo_hab.setEnabled(false);
 
-        btnguardar_hab.setText("Guardar");
-
-        btncancelar_hab.setText("Cancelar");
-
-        btneditar_hab.setText("Editar");
+        jLabel8.setFont(new java.awt.Font("Tahoma", 2, 14)); // NOI18N
+        jLabel8.setText("Código:");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel6))
-                        .addGap(27, 27, 27)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtnumero_hab)
-                            .addComponent(cbxpiso_hab, 0, 146, Short.MAX_VALUE)
-                            .addComponent(txtprecio_hab)
-                            .addComponent(cbxestado_hab, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(cbxtipo_hab, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnnuevo_hab)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnguardar_hab)
-                        .addGap(18, 18, 18)
-                        .addComponent(btneditar_hab, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btncancelar_hab))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(txtidHabitacion, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(21, 21, 21))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel6)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel8))
+                .addGap(27, 27, 27)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txt_estado_hab, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(txt_id_habitacion)
+                        .addComponent(txt_numero_hab)
+                        .addComponent(txt_piso_hab)
+                        .addComponent(txt_precio_hab)
+                        .addComponent(txt_tipo_hab, javax.swing.GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE)))
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(btn_registrar_hab)
+                .addGap(18, 18, 18)
+                .addComponent(btn_limpiar_campos_hab)
+                .addGap(18, 18, 18)
+                .addComponent(btn_nuevo_hab)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(txtidHabitacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(14, 14, 14)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(txt_id_habitacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(30, 30, 30)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(txtnumero_hab, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txt_numero_hab, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(29, 29, 29)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(cbxpiso_hab, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(42, 42, 42)
+                    .addComponent(txt_piso_hab, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(30, 30, 30)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(txtprecio_hab, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(49, 49, 49)
+                    .addComponent(txt_precio_hab, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4))
+                .addGap(34, 34, 34)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(cbxestado_hab, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(38, 38, 38)
+                    .addComponent(txt_tipo_hab, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6))
+                .addGap(34, 34, 34)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(cbxtipo_hab, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txt_estado_hab, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnguardar_hab)
-                    .addComponent(btnnuevo_hab)
-                    .addComponent(btncancelar_hab)
-                    .addComponent(btneditar_hab))
-                .addGap(44, 44, 44))
+                    .addComponent(btn_registrar_hab)
+                    .addComponent(btn_limpiar_campos_hab)
+                    .addComponent(btn_nuevo_hab))
+                .addGap(35, 35, 35))
         );
 
-        jPanel2.setBackground(new java.awt.Color(255, 255, 102));
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Listado de Habitaciones"));
 
-        jLabel7.setText("Buscar: ");
-
-        btnbuscar_hab.setText("Buscar");
-
-        btneliminar_hab.setText("Eliminar");
-
-        btnsalir_hab.setText("Salir");
-
-        tbListaHabitaciones.setModel(new javax.swing.table.DefaultTableModel(
+        tb_datos_hab.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Código", "Número", "Piso", "Precio", "Tipo de habitación", "Estado"
             }
         ));
-        jScrollPane1.setViewportView(tbListaHabitaciones);
-
-        btnListar_hab.setText("Listar");
+        jScrollPane1.setViewportView(tb_datos_hab);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -191,39 +189,83 @@ public class VistaHabitaciones extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel7)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtbuscar_hab, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnbuscar_hab, javax.swing.GroupLayout.DEFAULT_SIZE, 81, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btneliminar_hab, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnsalir_hab, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addComponent(jScrollPane1)
                 .addContainerGap())
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(217, 217, 217)
-                .addComponent(btnListar_hab)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(22, 22, 22)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(txtbuscar_hab, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnbuscar_hab)
-                    .addComponent(btneliminar_hab)
-                    .addComponent(btnsalir_hab))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
+        jPanel3.setBackground(new java.awt.Color(255, 255, 195));
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Opciones"));
+
+        jLabel7.setText("Buscar por número: ");
+
+        txt_buscar_hab.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_buscar_habActionPerformed(evt);
+            }
+        });
+
+        btn_buscar_hab.setText("Buscar");
+
+        btn_editar_hab.setIcon(new javax.swing.ImageIcon(getClass().getResource("/views/icon/editar.png"))); // NOI18N
+        btn_editar_hab.setText("Editar");
+        btn_editar_hab.setEnabled(false);
+
+        btn_actualizar_hab.setIcon(new javax.swing.ImageIcon(getClass().getResource("/views/icon/actualizar.png"))); // NOI18N
+        btn_actualizar_hab.setText("Actualizar");
+        btn_actualizar_hab.setEnabled(false);
+
+        btn_eliminar_hab.setIcon(new javax.swing.ImageIcon(getClass().getResource("/views/icon/eliminar.png"))); // NOI18N
+        btn_eliminar_hab.setText("Eliminar");
+        btn_eliminar_hab.setEnabled(false);
+
+        btn_listar_hab.setIcon(new javax.swing.ImageIcon(getClass().getResource("/views/icon/listar.png"))); // NOI18N
+        btn_listar_hab.setText("Listar");
+        btn_listar_hab.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_listar_habActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txt_buscar_hab, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btn_buscar_hab)
+                .addGap(60, 60, 60)
+                .addComponent(btn_editar_hab, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnListar_hab)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(btn_actualizar_hab)
+                .addGap(18, 18, 18)
+                .addComponent(btn_eliminar_hab, javax.swing.GroupLayout.DEFAULT_SIZE, 111, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(btn_listar_hab, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(21, 21, 21))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(txt_buscar_hab, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_buscar_hab)
+                    .addComponent(btn_editar_hab)
+                    .addComponent(btn_actualizar_hab)
+                    .addComponent(btn_eliminar_hab)
+                    .addComponent(btn_listar_hab))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -234,28 +276,44 @@ public class VistaHabitaciones extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(26, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void txt_tipo_habActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_tipo_habActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_tipo_habActionPerformed
+
+    private void txt_buscar_habActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_buscar_habActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_buscar_habActionPerformed
+
+    private void btn_listar_habActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_listar_habActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_listar_habActionPerformed
 
     /**
      * @param args the command line arguments
@@ -293,17 +351,14 @@ public class VistaHabitaciones extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    public javax.swing.JButton btnListar_hab;
-    public javax.swing.JButton btnbuscar_hab;
-    public javax.swing.JButton btncancelar_hab;
-    public javax.swing.JButton btneditar_hab;
-    public javax.swing.JButton btneliminar_hab;
-    public javax.swing.JButton btnguardar_hab;
-    public javax.swing.JButton btnnuevo_hab;
-    public javax.swing.JButton btnsalir_hab;
-    private javax.swing.JComboBox<String> cbxestado_hab;
-    private javax.swing.JComboBox<String> cbxpiso_hab;
-    private javax.swing.JComboBox<String> cbxtipo_hab;
+    public javax.swing.JButton btn_actualizar_hab;
+    public javax.swing.JButton btn_buscar_hab;
+    public javax.swing.JButton btn_editar_hab;
+    public javax.swing.JButton btn_eliminar_hab;
+    public javax.swing.JButton btn_limpiar_campos_hab;
+    public javax.swing.JButton btn_listar_hab;
+    public javax.swing.JButton btn_nuevo_hab;
+    public javax.swing.JButton btn_registrar_hab;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -311,13 +366,18 @@ public class VistaHabitaciones extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    public javax.swing.JTable tbListaHabitaciones;
-    private javax.swing.JTextField txtbuscar_hab;
-    private javax.swing.JTextField txtidHabitacion;
-    private javax.swing.JTextField txtnumero_hab;
-    private javax.swing.JTextField txtprecio_hab;
+    public javax.swing.JTable tb_datos_hab;
+    public javax.swing.JTextField txt_buscar_hab;
+    public javax.swing.JTextField txt_estado_hab;
+    public javax.swing.JTextField txt_id_habitacion;
+    public javax.swing.JTextField txt_numero_hab;
+    public javax.swing.JTextField txt_piso_hab;
+    public javax.swing.JTextField txt_precio_hab;
+    public javax.swing.JTextField txt_tipo_hab;
     // End of variables declaration//GEN-END:variables
 }
